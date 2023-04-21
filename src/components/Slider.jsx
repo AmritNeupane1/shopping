@@ -50,8 +50,9 @@ const Slide = styled.div`
   const ImgContainer = styled.div`
   height: 100%;
   flex: 1;
-  background-color: red;
+  background-color:aqua;
   border-radius:50%;
+  
 `;
 
 const Image = styled.img`
