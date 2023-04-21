@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Announcement from "../components/Announcement";
 import Products from "../components/Products";
@@ -35,8 +36,39 @@ const Select = styled.select`
   ${mobile({ margin: "10px 0px" })}
 `;
 const Option = styled.option``;
+const Input=styled.input`
+border: none;
+border-bottom: 0.125rem solid grey;
+width: 10%;
+height: 1rem;
+font-size: 1.0625rem;
+padding-left: 0.875rem;
+line-height: 147.6%;
+padding-top: 0.825rem;
+padding-bottom: 0.5rem;
+
+`;
 
 const ProductList = () => {
+  // const [oldvalue, setoldvalue] = useState({});
+  const [value, setNewvalue] = useState({
+    min:0,
+    max:0,
+  });
+  const size=useState("size");
+  const applychange=()=>{
+    
+  }
+  const handleChange=(e)=>{
+    setNewvalue({
+      ...value,
+      [e.target.name]: e.target.value,
+    });
+
+  };
+  const getComboA=(e)=> {
+    size=(e.target.value);
+  }
   return (
     <Container>
       <Navbar />
@@ -45,35 +77,23 @@ const ProductList = () => {
       <FilterContainer>
         <Filter>
           <FilterText>Filter Products:</FilterText>
-          <Select>
-            <Option disabled selected>
-              Color
-            </Option>
-            <Option>White</Option>
-            <Option>Black</Option>
-            <Option>Red</Option>
-            <Option>Blue</Option>
-            <Option>Yellow</Option>
-            <Option>Green</Option>
-          </Select>
-          <Select>
-            <Option disabled selected>
+          
+          <Select onChange={getComboA}>
+            <Option disabled selected value="size">
               Size
             </Option>
-            <Option>XS</Option>
-            <Option>S</Option>
-            <Option>M</Option>
-            <Option>L</Option>
-            <Option>XL</Option>
+            <Option value="xs">XS</Option>
+            <Option value="s">S</Option>
+            <Option value="m">M</Option>
+            <Option value="l">L</Option>
+            <Option value="xl">XL</Option>
           </Select>
         </Filter>
         <Filter>
-          <FilterText>Sort Products:</FilterText>
-          <Select>
-            <Option selected>Newest</Option>
-            <Option>Price (asc)</Option>
-            <Option>Price (desc)</Option>
-          </Select>
+          <FilterText>Price Range:</FilterText>
+          <Input type="Number" name="min" placeholder="Min" onChange={handleChange}/>{"  "}
+          <Input type="Number" name="max" placeholder="Max" onChange={handleChange}/>{"  "}
+          <button onClick={applychange}>Apply</button>
         </Filter>
       </FilterContainer>
       <Products />
