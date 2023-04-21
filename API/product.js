@@ -54,6 +54,9 @@ const productSchema = new mongoose.Schema({
   }],
   stars: {
     type: Number
+  },
+  quantity: {
+    type: Number
   }
 });
 

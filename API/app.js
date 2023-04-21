@@ -4,6 +4,7 @@ const Customer = require("./customer");
 const Orders = require('./order');
 const customerRouter = require('./customer-details');
 const productRouter = require('./product-details');
+const listRouter = require('./list-sorting');
 
 const cookieParser = require('cookie-parser');
 
@@ -20,6 +21,7 @@ app.get("/", (req, res)=>{
 
 app.use("/customer", customerRouter);
 app.use("/home", productRouter);
+app.use("/productList", listRouter);
 
 
 
