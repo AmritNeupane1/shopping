@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Announcement from "../components/Announcement";
 import Products from "../components/Products";
@@ -53,22 +53,47 @@ const ProductList = () => {
   // const [oldvalue, setoldvalue] = useState({});
   const [value, setNewvalue] = useState({
     min:0,
-    max:0,
+    max:10000000,
+    size:"size"
   });
-  const size=useState("size");
+  //const size=useState("size");
   const applychange=()=>{
-    
-  }
+    fetch("http://localhost:3002/productList/sort-by-price", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(value)
+      })
+      .then(response => response.json())
+      .then((data) => {setMyData(data); console.log(data)})
+      .catch(error => console.error(error));
+    }
+
   const handleChange=(e)=>{
     setNewvalue({
       ...value,
       [e.target.name]: e.target.value,
     });
-
   };
-  const getComboA=(e)=> {
-    size=(e.target.value);
-  }
+
+
+
+  const [myData, setMyData] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3002/productList/sort-by-price", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(value)
+      })
+      .then(response => response.json())
+      .then((data) => {setMyData(data); console.log(data)})
+      .catch(error => console.error(error));
+    }, []);
+
   return (
     <Container>
       <Navbar />
@@ -78,7 +103,7 @@ const ProductList = () => {
         <Filter>
           <FilterText>Filter Products:</FilterText>
           
-          <Select onChange={getComboA}>
+          <Select name="size" onChange={handleChange}>
             <Option disabled selected value="size">
               Size
             </Option>
@@ -96,7 +121,7 @@ const ProductList = () => {
           <button onClick={applychange}>Apply</button>
         </Filter>
       </FilterContainer>
-      <Products />
+      <Products popularProducts={myData}/>
       <Newsletter />
       <Footer />
     </Container>
