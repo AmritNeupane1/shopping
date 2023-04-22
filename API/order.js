@@ -8,10 +8,10 @@ const orderSchema = new mongoose.Schema({
     ref: 'Customer',
     required: true
   },
-  products: [{
+  products: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Product'
-  }],
+  },
   status: {
     type: String,
     enum: ['pending', 'processing', 'shipped', 'delivered'],

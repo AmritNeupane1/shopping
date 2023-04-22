@@ -5,6 +5,7 @@ const Orders = require('./order');
 const customerRouter = require('./customer-details');
 const productRouter = require('./product-details');
 const listRouter = require('./list-sorting');
+const cartRouter = require('./cart-details');
 const cors = require('cors');
 
 const cookieParser = require('cookie-parser');
@@ -24,6 +25,7 @@ app.get("/", (req, res)=>{
 app.use("/customer", customerRouter);
 app.use("/home", productRouter);
 app.use("/productList", listRouter);
+app.use("/cart", cartRouter);
 
 
 
