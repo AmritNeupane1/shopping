@@ -5,14 +5,16 @@ const Orders = require('./order');
 const customerRouter = require('./customer-details');
 const productRouter = require('./product-details');
 const listRouter = require('./list-sorting');
+const cors = require('cors');
 
 const cookieParser = require('cookie-parser');
 
 const app = express();
-app.listen(3001);
+app.listen(3002);
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 
 app.get("/", (req, res)=>{
     res.send("I, Giorno Giovana have a Dream.")

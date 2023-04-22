@@ -9,6 +9,9 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  img: {
+    type: String,
+  },
   size: {
     xs: {
       type: Boolean, 
@@ -33,10 +36,6 @@ const productSchema = new mongoose.Schema({
   },
   price: {
     type: Number,
-    required: true
-  },
-  image: {
-    type: String,
     required: true
   },
   category: {

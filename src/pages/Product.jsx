@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import { mobile } from "../responsive";
+import React, { useEffect, useState } from "react";
 
 const Container = styled.div``;
 
@@ -115,7 +116,18 @@ const Button = styled.button`
   }
 `;
 
-const Product = () => {
+const Product = (productID) => {
+
+  const [myData, setMyData] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3002/home/productPage/"+productID)
+      .then(response => response.json())
+      .then((data) => {setMyData(data); console.log(data)})
+      .catch(error => console.error(error));
+  }, []);
+
+
   return (
     <Container>
       <Navbar />

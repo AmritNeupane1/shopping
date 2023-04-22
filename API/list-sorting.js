@@ -15,7 +15,7 @@ listRouter
 async function sortByPrice(req, res){
     const data = req.body;
     try{
-        console.log(data.minPrice, data.maxPrice);
+        //console.log(data.minPrice, data.maxPrice);
         //let products = await Product.find().sort({ price: 1 });
         let products = await Product.find();
         if (!products) {

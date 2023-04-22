@@ -14,6 +14,10 @@ productRouter
     .route('/productPage/:id')
     .get(getProductPageInfo);
 
+productRouter
+    .route('/uploadProductData')
+    .post(postProductData);
+
 productRouter.use("/placeOrder", orderRouter);
 
 
@@ -39,5 +43,20 @@ async function getProductPageInfo(req, res){
         res.send('It was me, DIO.');
     }
 }
+
+
+
+async function postProductData(req, res){
+    try{
+        const newProduct = req.body;
+        let data = await Product.create(newProduct);
+        res.send(" The World");
+    } catch(err){
+        console.log(err);
+        res.send(" Yare Yare");
+    }
+}
+
+
 
 module.exports = productRouter;
