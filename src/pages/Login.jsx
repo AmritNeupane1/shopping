@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import {mobile} from "../responsive";
 import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
 
 const Container = styled.div`
   width: 100vw;
@@ -60,18 +61,26 @@ const Link = styled.a`
 
 const Login = (props) => {
   let setIsloggin=props.setIsloggin;
+  const [details,setDetails]=useState([]);
   const navigate=useNavigate();
   function clickHandler(){
     setIsloggin(true);
     navigate('/');
   }
+  const handledetailChange = (e) => {
+    setDetails({
+      ...details,
+      [e.target.name]: e.target.value,
+    });
+    
+  };
   return (
     <Container>
       <Wrapper>
         <Title>SIGN IN</Title>
         <Form>
-          <Input placeholder="username" />
-          <Input placeholder="password" />
+          <Input name="email" placeholder="email" onChange={handledetailChange} />
+          <Input name="password" placeholder="password" onChange={handledetailChange}/>
           <Button onClick={clickHandler}>LOGIN</Button>
           <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
           <Link>CREATE A NEW ACCOUNT</Link>

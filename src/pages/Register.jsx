@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
+import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 100vw;
@@ -28,7 +30,7 @@ const Title = styled.h1`
   font-weight: 300;
 `;
 
-const Form = styled.form`
+const Form = styled.div`
   display: flex;
   flex-wrap: wrap;
 `;
@@ -55,22 +57,45 @@ const Button = styled.button`
 `;
 
 const Register = () => {
+const [details,setDetails]=useState([]);
+const navigate=useNavigate();
+const [passworderror,setpassworderror]=useState(false);
+const handledetailChange = (e) => {
+  setDetails({
+    ...details,
+    [e.target.name]: e.target.value,
+  });
+  
+};
+const registerCreate=()=>{
+  if(details.password!==details.confirmpassword){
+    setpassworderror(true);
+    return;
+  }
+
+  delete details.confirmpassword;
+  console.log(details);
+  setDetails([]);
+  setpassworderror(false);
+  navigate('/');
+}
   return (
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
         <Form>
-          <Input placeholder="name" />
-          <Input placeholder="last name" />
-          <Input placeholder="username" />
-          <Input placeholder="email" />
-          <Input placeholder="password" />
-          <Input placeholder="confirm password" />
+          <Input name="firstName" placeholder="name" onChange={handledetailChange} />
+          <Input name="lastName" placeholder="last name" onChange={handledetailChange} />
+          <Input name="username" placeholder="username"  />
+          <Input name="email" placeholder="email" onChange={handledetailChange} />
+          <Input name="password" placeholder="password" onChange={handledetailChange} />
+          <Input name="confirmpassword"placeholder="confirm password" onChange={handledetailChange} />
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
-          <Button>CREATE</Button>
+          {passworderror && <div>Passwords do not match. please try again</div>}
+          <Button onClick={registerCreate}>CREATE</Button>
         </Form>
       </Wrapper>
     </Container>

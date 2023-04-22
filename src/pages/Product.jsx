@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import { mobile } from "../responsive";
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const Container = styled.div``;
 
@@ -116,14 +117,20 @@ const Button = styled.button`
   }
 `;
 
-const Product = (productID) => {
+const Product = () => {
 
   const [myData, setMyData] = useState([]);
-
+  const [mysize,setmysize]=useState([]);
+  const { productId }=useParams();
+  // console.log(productId);
+  
   useEffect(() => {
-    fetch("http://localhost:3002/home/productPage/"+productID)
+    // console.log(productID);
+    
+    console.log("http://localhost:3002/home/productPage/"+productId);
+    fetch("http://localhost:3002/home/productPage/"+productId)
       .then(response => response.json())
-      .then((data) => {setMyData(data); console.log(data)})
+      .then((data) => {setMyData(data); setmysize(data.size)})
       .catch(error => console.error(error));
   }, []);
 
@@ -134,42 +141,31 @@ const Product = (productID) => {
       <Announcement />
       <Wrapper>
         <ImgContainer>
-          <Image src="https://i.ibb.co/S6qMxwr/jean.jpg" />
+          <Image src={myData.img} />
         </ImgContainer>
         <InfoContainer>
-          <Title>Denim Jumpsuit</Title>
+          <Title>{myData.name}</Title>
           <Desc>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            venenatis, dolor in finibus malesuada, lectus ipsum porta nunc, at
-            iaculis arcu nisi sed mauris. Nulla fermentum vestibulum ex, eget
-            tristique tortor pretium ut. Curabitur elit justo, consequat id
-            condimentum ac, volutpat ornare.
+           {myData.description}
           </Desc>
-          <Price>$ 20</Price>
+          {/* <div>
+      <p>Prop 1: {prop1}</p>
+      <p>Prop 2: {prop2}</p>
+    </div> */}
+          <Price>Rs.{myData.price}</Price>
           <FilterContainer>
-            <Filter>
-              <FilterTitle>Color</FilterTitle>
-              <FilterColor color="black" />
-              <FilterColor color="darkblue" />
-              <FilterColor color="gray" />
-            </Filter>
             <Filter>
               <FilterTitle>Size</FilterTitle>
               <FilterSize>
-                <FilterSizeOption>XS</FilterSizeOption>
-                <FilterSizeOption>S</FilterSizeOption>
-                <FilterSizeOption>M</FilterSizeOption>
-                <FilterSizeOption>L</FilterSizeOption>
-                <FilterSizeOption>XL</FilterSizeOption>
+                { mysize.xs==true && <FilterSizeOption>XS</FilterSizeOption> }
+                { mysize.s==true && <FilterSizeOption>S</FilterSizeOption> }
+                { mysize.m==true && <FilterSizeOption>M</FilterSizeOption> }
+                { mysize.l==true && <FilterSizeOption>L</FilterSizeOption> }
+                { mysize.xl==true && <FilterSizeOption>XL</FilterSizeOption> }
               </FilterSize>
             </Filter>
           </FilterContainer>
           <AddContainer>
-            <AmountContainer>
-              <Remove />
-              <Amount>1</Amount>
-              <Add />
-            </AmountContainer>
             <Button>ADD TO CART</Button>
           </AddContainer>
         </InfoContainer>
