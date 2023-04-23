@@ -1,11 +1,12 @@
 import { Badge } from "@material-ui/core";
 import { Search, ShoppingCartOutlined } from "@material-ui/icons";
 // import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-import React from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import { Link } from 'react-router-dom';
 import "../style.css"
+import React, { useEffect, useState } from "react";
+
 
 const Container = styled.div`
   height: 60px;
@@ -71,6 +72,8 @@ const MenuItem = styled(Link)`
 
 const Navbar = (props) => {
   let isloggin=props.isloggin;
+  
+
   return (
     <Container>
       <Wrapper>

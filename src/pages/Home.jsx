@@ -16,7 +16,7 @@ const Home = (props) => {
   useEffect(() => {
     fetch("http://localhost:3002/home")
       .then(response => response.json())
-      .then((data) => {setMyData(data); console.log(data)})
+      .then((data) => {setMyData(data); console.log(data); })
       .catch(error => console.error(error));
   }, []);
 

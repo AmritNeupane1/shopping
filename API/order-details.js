@@ -16,7 +16,7 @@ async function placeOrder(req, res){
         console.log(req.cookies.customerID);
         const order = {
             customer: req.cookies.customerID,
-            products: [req.params.id],
+            products: req.params.id,
             status: 'pending',
         }
         let data = await Order.create(order);

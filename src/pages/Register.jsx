@@ -72,9 +72,20 @@ const registerCreate=()=>{
     setpassworderror(true);
     return;
   }
-
   delete details.confirmpassword;
   console.log(details);
+
+  fetch("http://localhost:3002/customer/signup", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(details)
+  })
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
+
   setDetails([]);
   setpassworderror(false);
   navigate('/');

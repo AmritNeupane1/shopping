@@ -61,9 +61,23 @@ const Link = styled.a`
 
 const Login = (props) => {
   let setIsloggin=props.setIsloggin;
-  const [details,setDetails]=useState([]);
+
+  const [details, setDetails]=useState([]);
+
   const navigate=useNavigate();
   function clickHandler(){
+
+    fetch("http://localhost:3002/customer/signin", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(details)
+  })
+  .then(response => response.json())
+  .then(data => {console.log(data); localStorage.setItem("customerID", data._id); console.log(localStorage.getItem("customerID"));})
+  .catch(error => console.error(error));
+
     setIsloggin(true);
     navigate('/');
   }
@@ -72,8 +86,9 @@ const Login = (props) => {
       ...details,
       [e.target.name]: e.target.value,
     });
-    
   };
+
+
   return (
     <Container>
       <Wrapper>

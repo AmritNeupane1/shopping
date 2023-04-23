@@ -8,7 +8,6 @@ const customerRouter = express.Router();
 
 customerRouter
     .route("/signup")
-    .get(getSignup)
     .post(postSignup);
 
 customerRouter
@@ -21,18 +20,42 @@ customerRouter
     .get(getInfo)
     .put(putInfo);
 
+customerRouter
+    .route("/setCookie")
+    .post(setCookie);
+
+async function setCookie(req, res){
+  res.cookie('mycookie', 'cookievalue', { domain: '.example.com', path: '/' });
+  res.send('Cookie set');
+}
 
 
-
-async function getSignup(req, res){
-    res.send(" Ho! you are approaching me.");
+async function getSignin(req, res){
+    try{
+        const obj = { isLoggedIn : true};
+        console.log("cookies :: ", req.cookies);
+        if(req.cookies.customerID)
+        {
+            console.log("It is true");
+            res.send(obj);
+        }else{
+            obj.isLoggedIn=false;
+            console.log("It is false");
+            res.send(obj);
+        }
+    } catch(err){
+        console.log(err);
+        console.log(req.cookies);
+        res.send('Your underwear is visible.');
+        return;
+    }
 }
 
 async function postSignup(req, res){
     try{
         const newCustomer = req.body;
         let data = await Customer.create(newCustomer);
-        res.cookie('customerID', data._id, {maxAge: 1000*60*60*24 ,httpOnly: true});
+        //res.cookie('customerID', data._id, {maxAge: 1000*60*60*24 ,httpOnly: true});
         res.send(" The World");
     } catch(err){
         console.log(err);
@@ -40,13 +63,6 @@ async function postSignup(req, res){
     }
 }
 
-
-
-
-async function getSignin(req, res){
-    console.log(req.cookies);
-    res.send(" Ho! you are approaching me.");
-}
 
 async function postSignin(req, res){
     const data = req.body;
@@ -57,9 +73,9 @@ async function postSignin(req, res){
             res.send("Invalid Credentials");
             return;
         }
-        res.cookie('customerID', customer._id, {maxAge: 1000*60*60*24 ,httpOnly: true});
+        console.log("user Found", customer._id);
+        //res.cookie('customerID', customer._id);
         res.send(customer);
-        console.log(customer);
     } catch(err){
         console.log(err);
         return;
@@ -70,6 +86,7 @@ async function postSignin(req, res){
 async function getInfo(req, res){
     try{
         const id = req.cookies.customerID;
+        console.log("Customer ID :::", req.cookies)
         const customer = await Customer.findOne({ _id: id });
         if (!customer) {
             console.log('User not found');
