@@ -45,7 +45,7 @@ const Profile = () => {
     setNewAddress({ street: "", city: "", state: "", zip: "" });
     setShowAddAddress(false);
     Item.addresses = addresses;
-    // window.location.reload(false);
+    window.location.reload(false);
   };
 
 
@@ -68,6 +68,8 @@ const Profile = () => {
   .catch(error => console.error(error));
 }, []);
 
+console.log(myData.orders);
+const orders=myData.orders;
 
 
   return (
@@ -82,15 +84,15 @@ const Profile = () => {
             <div className="section-header">Personal Information</div>
             <div className="row">
               <div className="label">First Name:</div>
-              <div className="value">John</div>
+              <div className="value">{myData.firstName}</div>
             </div>
             <div className="row">
               <div className="label">Last Name:</div>
-              <div className="value">Doe</div>
+              <div className="value">{myData.lastName}</div>
             </div>
             <div className="row">
               <div className="label">Email:</div>
-              <div className="value">johndoe@gmail.com</div>
+              <div className="value">{myData.email}</div>
             </div>
           </div>
           <div className="section bound">
@@ -100,17 +102,17 @@ const Profile = () => {
               <div className="label">Products</div>
               <div className="label">Total</div>
             </div>
-            {Item.orders.map((order) => (
+            {orders?.map((order) => (
               <div className="row" key={order._id}>
                 <div className="value">{order._id}</div>
-                <div className="value">{order.product}</div>
-                <div className="value">{order.totalAmount}</div>
+                <div className="value">{order.products.name}</div>
+                <div className="value">{order.products.price}</div>
               </div>
             ))}
           </div>
           <div className="section">
             <div className="section-header">Addresses</div>
-            {Item.addresses.map((address) => (
+            {myData.address?.map((address) => (
               <div className="address">
                 <div className="row">
                   <div className="label">street:</div>

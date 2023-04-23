@@ -37,7 +37,10 @@
 
 .row {
   display: flex;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
+  gap:25px;
+  background-color: aliceblue;
+  box-shadow: 0px 0px 0px 0.3px grey;
 }
 
 .header .label,
@@ -45,17 +48,24 @@
   font-weight: bold;
   margin-right: 10px;
   width: 100px;
+  
 }
 .row-header{
   
   display: flex;
   font-weight: bold;
-  gap: 150px; 
+  gap: 160px; 
   /* padding: 10px; */
   width: 100px;
 }
 .value {
-  flex: 1;
+  display: block;/* or inline-block */
+  flex:1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 5px;
+
 }
 
 .address {
