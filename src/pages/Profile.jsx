@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Item } from "../data.js";
 import "../style.css";
@@ -25,11 +25,50 @@ const Profile = () => {
       ...oldAddresses,
       { ...newAddress, id: addresses.length + 1 },
     ]);
+
+    const details = {
+      customerID: localStorage.getItem("customerID"), 
+      address: newAddress
+    };
+
+    fetch("http://localhost:3002/customer/addAddress", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(details)
+  })
+  .then(response => response.json())
+  .then(data => {console.log(data);})
+  .catch(error => console.error(error));
+
     setNewAddress({ street: "", city: "", state: "", zip: "" });
     setShowAddAddress(false);
     Item.addresses = addresses;
     // window.location.reload(false);
   };
+
+
+
+
+  const [myData, setMyData] = useState([]);
+
+  useEffect(() => {
+    const details = {customerID: localStorage.getItem("customerID")};
+
+    fetch("http://localhost:3002/customer/profile", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(details)
+  })
+  .then(response => response.json())
+  .then(data => {console.log(data); setMyData(data);})
+  .catch(error => console.error(error));
+}, []);
+
+
 
   return (
     <div>

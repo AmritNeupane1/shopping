@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Customer = require("./customer");
+const Order = require('./order');
 const cookieParser = require('cookie-parser');
 
 
@@ -17,8 +18,12 @@ customerRouter
 
 customerRouter
     .route("/profile")
-    .get(getInfo)
-    .put(putInfo);
+    .post(postInfo)
+    .get(getInfo);
+
+customerRouter
+    .route("/addAddress")
+    .post(addAddress);
 
 customerRouter
     .route("/setCookie")
@@ -85,16 +90,29 @@ async function postSignin(req, res){
 
 async function getInfo(req, res){
     try{
-        const id = req.cookies.customerID;
-        console.log("Customer ID :::", req.cookies)
+        //const id = req.body.customerID;
+        console.log(req.body.customerID);
+        const id = "64441fc45aa4d799ad28b822";
+        //console.log("Customer ID :::", req.cookies)
         const customer = await Customer.findOne({ _id: id });
         if (!customer) {
             console.log('User not found');
             res.send("Invalid Credentials");
             return;
         }
-        console.log(customer);
-        res.send(customer);
+        //customer.placedOrder = [];
+        const data = customer;
+        placedOrder=[];
+        const orders = await Order.find({customer: id}).populate("products");
+        orders.forEach((element)=>{
+            console.log(element);
+            placedOrder.push(element);
+            console.log("Order Found");
+        });
+        //data.firstName = "asd";
+        data.orders = placedOrder;
+        console.log(data);
+        res.send(data);
     } catch(err){
         console.log(err);
         console.log(req.cookies);
@@ -103,17 +121,50 @@ async function getInfo(req, res){
     }
 }
 
-async function putInfo(req, res){
-    console.log('It was me, DIO')
+async function postInfo(req, res){
     try{
-        const id = req.cookies.customerID;
+        //const id = req.body.customerID;
+        console.log(req.body.customerID);
+        const id = req.body.customerID;
+        //console.log("Customer ID :::", req.cookies)
         const customer = await Customer.findOne({ _id: id });
         if (!customer) {
             console.log('User not found');
             res.send("Invalid Credentials");
             return;
         }
-        customer.address.push(req.body);
+        //customer.placedOrder = [];
+        const data = customer;
+        placedOrder=[];
+        const orders = await Order.find({customer: id}).populate("products");
+        orders.forEach((element)=>{
+            console.log(element);
+            placedOrder.push(element);
+            console.log("Order Found");
+        });
+        //data.firstName = "asd";
+        data.orders = placedOrder;
+        console.log(data);
+        res.send(data);
+    } catch(err){
+        console.log(err);
+        console.log(req.cookies);
+        res.send('Your underwear is visible.');
+        return;
+    }
+}
+
+async function addAddress(req, res){
+    console.log('It was me, DIO')
+    try{
+        const id = req.body.customerID;
+        const customer = await Customer.findOne({ _id: id });
+        if (!customer) {
+            console.log('User not found');
+            res.send("Invalid Credentials");
+            return;
+        }
+        customer.address.push(req.body.address);
         const data = await customer.save();
         console.log(customer);
         res.send(customer);
