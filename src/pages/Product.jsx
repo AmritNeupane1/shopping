@@ -124,6 +124,30 @@ const Product = () => {
   const { productId }=useParams();
   // console.log(productId);
   
+
+  function clickHandler(){
+
+    const details = {
+      customerID: localStorage.getItem("customerID"),
+      productID: myData._id
+    };
+
+    fetch("http://localhost:3002/cart/addToCart", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(details)
+  })
+  .then(response => response.json())
+  .then(data => {console.log(data);})
+  .catch(error => console.error(error));
+
+  alert('Product Added to Cart !');
+  }
+
+
+
   useEffect(() => {
     // console.log(productID);
     
@@ -166,7 +190,7 @@ const Product = () => {
             </Filter>
           </FilterContainer>
           <AddContainer>
-            <Button>ADD TO CART</Button>
+            <Button onClick={clickHandler}>ADD TO CART</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>

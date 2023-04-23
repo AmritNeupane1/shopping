@@ -6,6 +6,8 @@ import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
 import { Products } from "../data.js"
 import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+
 
 const Container = styled.div``;
 
@@ -156,11 +158,36 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
+
+  //let Products=[];
+  let [myData, setMyData]= useState([]);
+  useEffect(() => {
+    const details = {customerID: localStorage.getItem("customerID")};
+
+    fetch("http://localhost:3002/customer/cartInfo", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(details)
+  })
+  .then(response => response.json())
+  .then((data) => {console.log(data, "HEY"); setMyData(data)})
+  .catch(error => console.error(error));
+  }, []);
+
+  console.log(myData, "HEY There!");
+
   const navigate=useNavigate()
-  const totalprice=Products.map(item => item.price).reduce((prev, next) => prev + next);
+  const totalprice=myData.cart?.map(item => item.price).reduce((prev, next) => prev + next);
   const estprice=100;
   const discount=totalprice*0.02;
   const total=totalprice+estprice-discount;
+
+  /*
+  Products.map(item => item.price).reduce((prev, next) => prev + next)
+  */
+
   return (
     <Container>
       <Navbar isloggin="true" />
@@ -177,7 +204,7 @@ const Cart = () => {
         </Top>
         <Bottom>
           <Info>
-            {Products.map((product)=>{
+            {myData.cart?.map((product)=>{
               console.log(product);
               return(
                 <>
@@ -189,7 +216,7 @@ const Cart = () => {
                       <b>Product:</b> {product.name}
                     </ProductName>
                     <ProductId>
-                      <b>ID:</b> {product.id}
+                      <b>ID:</b> {product._id}
                     </ProductId>
                   </Details>
                 </ProductDetail>
@@ -203,6 +230,7 @@ const Cart = () => {
               );
             })}
           </Info>
+          
           <Summary>
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
