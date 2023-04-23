@@ -29,6 +29,10 @@ customerRouter
     .route("/setCookie")
     .post(setCookie);
 
+customerRouter
+    .route('/cartInfo')
+    .post(getCartInfo);
+
 async function setCookie(req, res){
   res.cookie('mycookie', 'cookievalue', { domain: '.example.com', path: '/' });
   res.send('Cookie set');
@@ -171,6 +175,38 @@ async function addAddress(req, res){
     } catch(err){
         //console.log(err);
         //console.log(req.cookies);
+        res.send('Your underwear is visible.');
+        return;
+    }
+}
+
+async function getCartInfo(req, res){
+    try{
+        //const id = req.body.customerID;
+        console.log(req.body.customerID);
+        const id = req.body.customerID;
+        //console.log("Customer ID :::", req.cookies)
+        const customer = await Customer.findOne({ _id: id }).populate("cart");
+        if (!customer) {
+            console.log('User not found');
+            res.send("Invalid Credentials");
+            return;
+        }
+        //customer.placedOrder = [];
+        //const data = customer;
+        // cartProducts=[];
+        // customer.cart.forEach((element)=>{
+        //     console.log(element);
+        //     const product = await Product.find({customer: id}).populate("products");
+        //     placedOrder.push(element);
+        //     console.log("Order Found");
+        // });
+        //data.cart = placedOrder;
+        console.log(customer);
+        res.send(customer);
+    } catch(err){
+        console.log(err);
+        console.log(req.cookies);
         res.send('Your underwear is visible.');
         return;
     }
