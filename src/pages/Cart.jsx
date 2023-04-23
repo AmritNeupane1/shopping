@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
 import { Products } from "../data.js"
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div``;
 
@@ -155,6 +156,11 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
+  const navigate=useNavigate()
+  const totalprice=Products.map(item => item.price).reduce((prev, next) => prev + next);
+  const estprice=100;
+  const discount=totalprice*0.02;
+  const total=totalprice+estprice-discount;
   return (
     <Container>
       <Navbar isloggin="true" />
@@ -201,21 +207,21 @@ const Cart = () => {
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
+              <SummaryItemPrice>Rs. {totalprice}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+              <SummaryItemPrice>Rs {estprice}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+              <SummaryItemPrice>Rs. {discount} </SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
+              <SummaryItemPrice>Rs. {total}</SummaryItemPrice>
             </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
+            <Button onClick={()=>{alert("order Placed"); navigate('/');}}>CHECKOUT NOW</Button>
           </Summary>
         </Bottom>
       </Wrapper>
