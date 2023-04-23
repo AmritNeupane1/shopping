@@ -1,7 +1,7 @@
 export const sliderItems = [
     {
       id: 1,
-      img: "http://clipart-library.com/images_k/wedding-dress-transparent-background/wedding-dress-transparent-background-10.png",
+      img: "https://i.ibb.co/cXFnLLV/3.png",
       title: "SUMMER SALE",
       desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
       bg: "f5fafd",

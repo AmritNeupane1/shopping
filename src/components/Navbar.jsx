@@ -49,11 +49,22 @@ const Input = styled.input`
 const Center = styled.div`
   flex: 1;
   text-align: center;
+  text-decoration: none;
 `;
+
+
 
 const Logo = styled.h1`
   font-weight: bold;
+  text-align: center;
+  font-weight: 700;
+  transition-duration: .3s;
+  cursor: pointer;
+  text-decoration: none;
   ${mobile({ fontSize: "24px" })}
+  &:hover {
+    font-size: 35px;
+  }
 `;
 const Right = styled.div`
   flex: 1;
@@ -86,7 +97,7 @@ const Navbar = (props) => {
         </Left>
         <Center>
           <Link to="/">
-          <Logo>LAMA.</Logo>
+          <Logo>GOAT.ed</Logo>
           </Link>
         </Center>
         <Right>

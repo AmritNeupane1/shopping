@@ -11,6 +11,7 @@ const Container = styled.div`
   display: flex;
   position: relative;
   overflow: hidden;
+  background-color: #FAF0FA;
   ${mobile({ display: "none" })}
 `;
 
@@ -48,15 +49,15 @@ const Slide = styled.div`
   `;
   
   const ImgContainer = styled.div`
-  height: 100%;
+  height: 50%;
   flex: 1;
-  background-color:aqua;
+  background-color:#FEE7D2;
   border-radius:50%;
   
 `;
 
 const Image = styled.img`
-  height: 80%;
+  height: 150%;
 `;
 
 const InfoContainer = styled.div`
