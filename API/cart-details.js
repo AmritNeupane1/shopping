@@ -13,7 +13,7 @@ cartRouter
 
 cartRouter
     .route("/orderCart")
-    .get(orderProducts);
+    .post(orderProducts);
 
 
 async function addProduct(req, res){
@@ -39,7 +39,7 @@ async function addProduct(req, res){
 
 async function orderProducts(req, res){
     try{
-        const id = req.cookies.customerID;
+        const id = req.body.customerID;
         const customer = await Customer.findOne({ _id: id });
         if (!customer) {
             console.log('User not found');

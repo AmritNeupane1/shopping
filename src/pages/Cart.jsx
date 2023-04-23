@@ -179,7 +179,7 @@ const Cart = () => {
   console.log(myData, "HEY There!");
 
   const navigate=useNavigate()
-  const totalprice=myData.cart?.map(item => item.price).reduce((prev, next) => prev + next);
+  const totalprice=myData.cart?.map(item => item.price).reduce((prev, next) => prev + next, 0);
   const estprice=100;
   const discount=totalprice*0.02;
   const total=totalprice+estprice-discount;
@@ -189,6 +189,19 @@ const Cart = () => {
   */
   const afterCheckout=()=>{
 
+    const details = {customerID: localStorage.getItem("customerID")};
+
+    fetch("http://localhost:3002/cart/orderCart", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(details)
+  })
+  .then(response => response.json())
+  .then(data => {console.log(data);})
+  .catch(error => console.error(error));
+    
     alert("order Placed"); 
     navigate('/');
   }
