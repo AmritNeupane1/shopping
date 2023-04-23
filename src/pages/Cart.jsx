@@ -183,11 +183,15 @@ const Cart = () => {
   const estprice=100;
   const discount=totalprice*0.02;
   const total=totalprice+estprice-discount;
-
+  
   /*
   Products.map(item => item.price).reduce((prev, next) => prev + next)
   */
+  const afterCheckout=()=>{
 
+    alert("order Placed"); 
+    navigate('/');
+  }
   return (
     <Container>
       <Navbar isloggin="true" />
@@ -200,7 +204,7 @@ const Cart = () => {
             <TopText>Shopping Bag(2)</TopText>
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
-          <TopButton type="filled">CHECKOUT NOW</TopButton>
+          <TopButton type="filled" onClick={afterCheckout} >CHECKOUT NOW</TopButton>
         </Top>
         <Bottom>
           <Info>
@@ -249,7 +253,7 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>Rs. {total}</SummaryItemPrice>
             </SummaryItem>
-            <Button onClick={()=>{alert("order Placed"); navigate('/');}}>CHECKOUT NOW</Button>
+            <Button onClick={afterCheckout}>CHECKOUT NOW</Button>
           </Summary>
         </Bottom>
       </Wrapper>
